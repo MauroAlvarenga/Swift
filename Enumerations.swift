@@ -1,27 +1,59 @@
 // Enumeraciones (enum)
-
 enum Enumeracion {
     //los casos van aqui
 }
+
+enum EjeCardinalUnaLinea {
+    case norte, sur, este, oeste
+} // Una sola linea
 
 enum EjeCardinal {
     case norte
     case sur
     case este
     case oeste
+    
     func opuesta() -> EjeCardinal {
-        switch direccionCardinal {
+        switch self {
         case .norte: return .sur
         case .sur: return .norte
         case .este: return .oeste
         case .oeste: return .este
         }
-    } // Funciones que modifican el enum
+    } // Metodo que modifica el enum
+    
+    func proxima() -> EjeCardinal {
+        switch self {
+        case .norte: return .este
+        case .sur: return .oeste
+        case .este: return .sur
+        case .oeste: return .norte
+        }
+    }
+    
+    func anterior() -> EjeCardinal {
+        switch self {
+        case .norte: return .oeste
+        case .oeste: return .sur
+        case .sur: return .este
+        case .este: return .norte
+        }
+    }
+    
+    func toString() -> String {
+        switch self {
+        case .norte: return "Norte"
+        case .sur: return "Sur"
+        case .este: return "Este"
+        case .oeste: return "Oeste"
+        }
+    }
 } // multiples lineas
 
-enum EjeCardinalUnaLinea {
-    case norte, sur, este, oeste
-} // Una sola linea
+let direccionActual = EjeCardinal.norte
+print("Opuesta a Norte: \(direccionActual.opuesta().toString())")
+print("Siguiente a Norte: \(direccionActual.proxima().toString())")
+print("Anterior a Norte: \(direccionActual.anterior().toString())")
 
 let direccionCardinal = EjeCardinal.sur
 
@@ -35,9 +67,6 @@ case .este:
 case .oeste:
     print("Mirando al Oeste")
 }
-
-let direccionActual = EjeCardinal.norte
-print("Nueva Direccion: \(direccionActual.opuesta())")
 
 enum Bebida: CaseIterable { // CaseIterable provee una coleccion de todos los casos de la enumeracion
     case cafe, te, jugo, mate
@@ -84,10 +113,24 @@ let nuevoPlaneta = Planetas(rawValue: 15) // Nil
 
 //Ejercitacion 1
 enum DiasDeLaSemana: Int {
-    case lunes = 1, martes, miercoles, jueves, viernes
+    case lunes = 1, martes, miercoles, jueves, viernes, sabado, domingo
+    
+    func toString() -> String {
+        switch self {
+        case .lunes: return "Lunes"
+        case .martes: return "Martes"
+        case .miercoles: return "Miercoles"
+        case .jueves: return "Jueves"
+        case .viernes: return "Viernes"
+        default: return "Finde"
+        }
+    }
 }
 
-let diaViernes = DiasDeLaSemana.martes.rawValue + 3 // Se puede tomar un raw y sumar
+var diaViernes = DiasDeLaSemana.martes.rawValue + 3 // Se puede tomar un raw y sumar
+let diaMiercoles = DiasDeLaSemana.miercoles
+print(diaMiercoles)
+print(diaMiercoles.toString())
 
 enum conexionServicio {
     case sinConexion
